@@ -18,8 +18,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./output_images/DistVsUndistChess.png "Undistorted"
-[image2]: ./output_images/DistVsUndistRoad "Road Transformed"
-[image3]: ./BinaryThresholded.png "Binary Example"
+[image2]: ./output_images/DistVsUndistRoad.png "Road Transformed"
+[image3]: ./output_images/BinaryThresholded.png "Binary Example"
 [image4]: ./examples/warped_straight_lines.jpg "Warp Example"
 [image5]: ./examples/color_fit_lines.jpg "Fit Visual"
 [image6]: ./examples/example_output.jpg "Output"
