@@ -24,7 +24,6 @@ The goals / steps of this project are the following:
 [image4]: ./output_images/PersTransTest.png "Warp Example"
 [image5]: ./output_images/SlidingWindow.png "Fit Visual"
 [image6]: ./output_images/pipelineOutput.png "Output"
-[video1]: ./output_project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -102,19 +101,19 @@ After finding the left and right polynomial fits, the radius of curvature, and o
 
 ![alt text][image6]
 
+####7. Object Orient Pipeline 
+To be able to save the state of previous lines and provide sanity checks, I implemented a LaneDetect class that stores the 10 frames and averages over them to provide a smooth transition of the lines between frames. Also, two sanity checks were implemented to rule out bad frames. The code for the OO pipeline can be found in code cell 11 in the IPython notebook.
+
 ---
 
 ###Pipeline (video)
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./output_project_video.mp4)
+Here's a [YouTube link to my video result](https://youtu.be/gzO_Hxq8_MU)
 
 ---
 
 ###Discussion
 
-####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
-
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
-
+Even though this project was very challenging, I really enjoyed working on it. Processing the video takes about half an hour, I think it would have taken much less time if my laptop had a GPU. The pipline might not perform as well in low light conditions because the lanes will not be clearly visible. The interactive sliders idea (suggested by Ahmad Anwar) was really helpful to find out the best thresholds that would make the line lanes clearly visible. I used a couple of sanity checks
