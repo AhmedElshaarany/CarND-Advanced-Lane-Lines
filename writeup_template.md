@@ -20,9 +20,9 @@ The goals / steps of this project are the following:
 [image1]: ./output_images/DistVsUndistChess.png "Undistorted"
 [image2]: ./output_images/DistVsUndistRoad.png "Road Transformed"
 [image3]: ./output_images/BinaryThresholded.png "Binary Example"
-[image4]: ./examples/warped_straight_lines.jpg "Warp Example"
-[image5]: ./examples/color_fit_lines.jpg "Fit Visual"
-[image6]: ./examples/example_output.jpg "Output"
+[image4]: ./output_images/PersTransTest.png "Warp Example"
+[image5]: ./output_images/SlidingWindow.png "Fit Visual"
+[image6]: ./output_images/pipelineOutput.png "Output"
 [video1]: ./project_video.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
@@ -69,49 +69,35 @@ Here's an example of my output for this step:
 
 ![alt text][image3]
 
-####3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
+####3. Perspective Transformation
 
-The code for my perspective transform includes a function called `warper()`, which appears in lines 1 through 8 in the file `example.py` (output_images/examples/example.py) (or, for example, in the 3rd code cell of the IPython notebook).  The `warper()` function takes as inputs an image (`img`), as well as source (`src`) and destination (`dst`) points.  I chose the hardcode the source and destination points in the following manner:
-
-```
-src = np.float32(
-    [[(img_size[0] / 2) - 55, img_size[1] / 2 + 100],
-    [((img_size[0] / 6) - 10), img_size[1]],
-    [(img_size[0] * 5 / 6) + 60, img_size[1]],
-    [(img_size[0] / 2 + 55), img_size[1] / 2 + 100]])
-dst = np.float32(
-    [[(img_size[0] / 4), 0],
-    [(img_size[0] / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), img_size[1]],
-    [(img_size[0] * 3 / 4), 0]])
-
-```
-This resulted in the following source and destination points:
+The code for my perspective transform includes a function called `perspectiveTransform()`, which appears in 4th code cell of the IPython notebook. The `perspectiveTransform()` function takes as inputs an image (`image`).  I chose the hardcode the source and destination points in the following manner:
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 585, 460      | 320, 0        | 
-| 203, 720      | 320, 720      |
-| 1127, 720     | 960, 720      |
-| 695, 460      | 960, 0        |
+| 160, 720      | 300, 720      | 
+| 1150, 720     | 300, 720      |
+| 580, 450      | 300, 0        |
+| 700, 450      | 900, 0        |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
 ![alt text][image4]
 
-####4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+####4. Lane-Line Pixels Identifications and Polynomial Fitting
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+After creating the binary-thresholded image and applying perspective transform, I used a histogram across the x-axis to detect peaks that would indicate the left and right lines of the lane. Afterwards, a sliding window was used to follow the line from the bottom to the top of the image. A second degree polynomial is then used to fit the lane lines. The visulaization of the sliding window and fitted polynomials is shown below.
 
 ![alt text][image5]
 
-####5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+####5. Radius of Curvature and Car-Lane Center Offset Calculation 
 
-I did this in lines # through # in my code in `my_other_file.py`
+For calculating the radius of curvature, I followed the tutorial in this [link](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). The offset is calculated by subtracting the lane center from the center of the image. When calculating both values, I had to take into consideration transforming the pixel space into the real world space. The code is in code cell 10 in the iPython notebook.
 
-####6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
-I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
+####6. Pipeline Output
+
+After finding the left and right polynomial fits, the radius of curvature, and offset, I projected the measurements back onto the original undistorted road image. I implemented this step in cell code 11 in the IPython notebook in the function `drawResult()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
