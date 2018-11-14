@@ -29,9 +29,9 @@ The goals / steps of this project are the following:
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
 
 ---
-###Camera Calibration
+### Camera Calibration
 
-####1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
+#### 1. Briefly state how you computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
 The code for this step is contained in the first code cell of the IPython notebook located in "./Project-Notebook.ipynb".  
 
@@ -41,14 +41,14 @@ I then used the output `objpoints` and `imgpoints` to compute the camera calibra
 
 ![alt text][image1]
 
-###Pipeline (single images)
+### Pipeline (single images)
 
-####1. Distortion-Corrected Road Image
+#### 1. Distortion-Corrected Road Image
 I used the camera calibration adn distortion coefficiets to be undistort the road image as shown in the example below:
 
 ![alt text][image2]
 
-####2. Binary Thresholed Image
+#### 2. Binary Thresholed Image
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps in third code cell in IPython notebook).  I used interactive sliders to be able to tune the different thresholds and parameters to come up with the bes possible binary image that clearly shows the lane lines. The parameters and thresholds chosen are in the following table:
 
 | Parameter/Threhshold   | Value   | 
@@ -69,7 +69,7 @@ Here's an example of my output for this step:
 
 ![alt text][image3]
 
-####3. Perspective Transformation
+#### 3. Perspective Transformation
 
 The code for my perspective transform includes a function called `perspectiveTransform()`, which appears in 4th code cell of the IPython notebook. The `perspectiveTransform()` function takes as inputs an image (`image`).  I chose the hardcode the source and destination points in the following manner:
 
@@ -84,36 +84,36 @@ I verified that my perspective transform was working as expected by drawing the 
 
 ![alt text][image4]
 
-####4. Lane-Line Pixels Identifications and Polynomial Fitting
+#### 4. Lane-Line Pixels Identifications and Polynomial Fitting
 
 After creating the binary-thresholded image and applying perspective transform, I used a histogram across the x-axis to detect peaks that would indicate the left and right lines of the lane. Afterwards, a sliding window was used to follow the line from the bottom to the top of the image. A second degree polynomial is then used to fit the lane lines. The visulaization of the sliding window and fitted polynomials is shown below.
 
 ![alt text][image5]
 
-####5. Radius of Curvature and Car-Lane Center Offset Calculation 
+#### 5. Radius of Curvature and Car-Lane Center Offset Calculation 
 
 For calculating the radius of curvature, I followed the tutorial in this [link](http://www.intmath.com/applications-differentiation/8-radius-curvature.php). The offset is calculated by subtracting the lane center from the center of the image. When calculating both values, I had to take into consideration transforming the pixel space into the real world space. The code is in code cell 10 in the iPython notebook.
 
 
-####6. Pipeline Output
+#### 6. Pipeline Output
 
 After finding the left and right polynomial fits, the radius of curvature, and offset, I projected the measurements back onto the original undistorted road image. I implemented this step in cell code 11 in the IPython notebook in the function `drawResult()`.  Here is an example of my result on a test image:
 
 ![alt text][image6]
 
-####7. Object Orient Pipeline 
+#### 7. Object Orient Pipeline 
 To be able to save the state of previous lines and provide sanity checks, I implemented a LaneDetect class that stores the 10 frames and averages over them to provide a smooth transition of the lines between frames. Also, two sanity checks were implemented to rule out bad frames. The code for the OO pipeline can be found in code cell 11 in the IPython notebook.
 
 ---
 
-###Pipeline (video)
+### Pipeline (video)
 
-####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
 Here's a [YouTube link to my video result](https://youtu.be/gzO_Hxq8_MU)
 
 ---
 
-###Discussion
+### Discussion
 
-Even though this project was very challenging, I really enjoyed working on it. Processing the video takes about half an hour, I think it would have taken much less time if my laptop had a GPU. The pipline might not perform as well in low light conditions because the lanes will not be clearly visible. The interactive sliders idea (suggested by Ahmad Anwar) was really helpful to find out the best thresholds that would make the line lanes clearly visible. I used a couple of sanity checks
+Even though this project was very challenging, I really enjoyed working on it. The pipline might not perform as well in low light conditions because the lanes will not be clearly visible. The interactive sliders idea (suggested by Ahmad Anwar) was really helpful to find out the best thresholds that would make the line lanes clearly visible. I used a couple of sanity checks
